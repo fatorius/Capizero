@@ -144,6 +144,10 @@ void Board::makeMove(moves san){
 
     setPiece(original, noPiece);
     setPiece(destination, movedPiece);
+
+    // TODO CASTLINGS 
+    // TODO PROMOTION
+    // TODO EN PASSANT
 }
 
 void Board::setCastlingSides(string fen){
