@@ -5,6 +5,8 @@
 #include <bitset>
 using namespace std;
 
+#define INITIAL_POSITION "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+
 #define NO_PIECE 0
 
 #define whitePawn 1
@@ -24,14 +26,18 @@ using namespace std;
 #define NUMBER_OF_RANKS 8
 #define NUMBER_OF_FILES 8
 
-typedef int_fast8_t coordinate;
+#define WHITE true;
+#define BLACK false;
+
+typedef bool side;
 typedef bitset<4> piece;
+typedef int_fast8_t coordinate;
 typedef int_least8_t square;
 
 class Board{
 
     public:
-        Board(string fen);
+        Board(string fen = INITIAL_POSITION);
         string currentPosition;
 
         bitset<NUMBER_OF_SQUARES> whitePawns;
@@ -50,10 +56,13 @@ class Board{
         void setPosition(string newFen);
         piece getPiece(coordinate x, coordinate y);
 
+        side side;
+
+        bitset<4> castlingSides = 0x0;
+
     private:
         square coordinateToSquare(coordinate x, coordinate y);
-
-
+        void setCastlingSides(string fen);
 };
 
 #endif

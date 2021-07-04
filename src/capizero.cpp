@@ -6,7 +6,7 @@ using namespace std;
 
 int main(){
 
-    Board board("a");
+    Board board();
 
     return 0;
 }
