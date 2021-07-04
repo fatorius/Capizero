@@ -1,13 +1,13 @@
-capizero: capizero.o board.o 
-	@ g++ -o capizero capizero.o board.o
+capizero: ./src/capizero.o ./src/board.o 
+	@ g++ -o capizero ./src/capizero.o ./src/board.o
 
-capizero.o: capizero.cpp
-	@ g++ -c capizero.cpp -o capizero.o
+capizero.o: ./src/capizero.cpp
+	@ g++ -c ./src/capizero.cpp -o ./src/capizero.o
 
-board.o: board.cpp
-	@ g++ -c board.cpp -o board.o
+board.o: ./src/board.cpp
+	@ g++ -c ./src/board.cpp -o ./src/board.o
 
 clean:
-	@ del *.o
+	@ del src\*.o
 
 all: capizero clean
