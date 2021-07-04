@@ -7,21 +7,6 @@ using namespace std;
 
 #define INITIAL_POSITION "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
-#define NO_PIECE 0
-
-#define whitePawn 1
-#define blackPawn 2
-#define whiteKnight 3
-#define blackKnight 4
-#define whiteBishop 5
-#define blackBishop 6
-#define whiteRook 7
-#define blackRook 8
-#define whiteQueen 9
-#define blackQueen 10
-#define whiteKing 11
-#define blackKing 12
-
 #define NUMBER_OF_SQUARES 64
 #define NUMBER_OF_RANKS 8
 #define NUMBER_OF_FILES 8
@@ -30,14 +15,29 @@ using namespace std;
 #define BLACK false;
 
 typedef bool side;
-typedef bitset<4> piece;
+typedef int_least8_t piece;
 typedef int_fast8_t coordinate;
 typedef int_least8_t square;
+
+const piece noPiece = 0;
+const piece whitePawn = 1;
+const piece blackPawn = 2;
+const piece whiteKnight = 3;
+const piece blackKnight = 4;
+const piece whiteBishop = 5;
+const piece blackBishop = 6;
+const piece whiteRook = 7;
+const piece blackRook = 8;
+const piece whiteQueen = 9;
+const piece blackQueen = 10;
+const piece whiteKing = 11;
+const piece blackKing = 12;
 
 class Board{
 
     public:
         Board(string fen = INITIAL_POSITION);
+
         string currentPosition;
 
         bitset<NUMBER_OF_SQUARES> whitePawns;
@@ -53,16 +53,22 @@ class Board{
         bitset<NUMBER_OF_SQUARES> whiteKings;
         bitset<NUMBER_OF_SQUARES> blackKings;
 
-        void setPosition(string newFen);
-        piece getPiece(coordinate x, coordinate y);
-
         side side;
 
         bitset<4> castlingSides = 0x0;
 
+        int halfmoves;
+        int fullmoves;
+
+        void setPosition(string newFen);
+        void printBoard();
+        piece getPiece(coordinate x, coordinate y);
+
     private:
         square coordinateToSquare(coordinate x, coordinate y);
         void setCastlingSides(string fen);
+        void setMoveAmount(string fen);
+        string pieceToString(piece piece);
 };
 
 #endif

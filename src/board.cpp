@@ -1,6 +1,7 @@
 #include "board.h"
 
 #include <ctype.h>
+#include <string>
 #include <iostream>
 using namespace std;
 
@@ -33,6 +34,9 @@ void Board::setPosition(string newFen){
             case 'k':
                 blackKings[currentSquare] = 1;
                 break;
+            case 'p':
+                blackPawns[currentSquare] = 1;
+                break;
             case 'R':
                 whiteRooks[currentSquare] = 1;
                 break;
@@ -47,6 +51,9 @@ void Board::setPosition(string newFen){
                 break;
             case 'K':
                 whiteKings[currentSquare] = 1;
+                break;
+            case 'P':
+                whitePawns[currentSquare] = 1;
                 break;
             case '/':
                 currentSquare -= 15;
@@ -99,7 +106,15 @@ void Board::setPosition(string newFen){
             break;
         }
     }
+}
 
+void Board::printBoard(){
+    for (int x = 0; x < 8; x++){
+        for (int y = 0; y < 8; y++){
+            cout<<" "<<pieceToString(getPiece(y, x))<<" ";
+        }
+        cout<<endl;
+    }
 }
 
 piece Board::getPiece(coordinate x, coordinate y){
@@ -141,11 +156,11 @@ piece Board::getPiece(coordinate x, coordinate y){
     else if (blackKings[s]){
         return blackKing;
     }
-    return NO_PIECE;
+    return noPiece;
 }
 
 square Board::coordinateToSquare(coordinate x, coordinate y){
-    return (y * NUMBER_OF_RANKS) + (x + 1);
+    return (y * NUMBER_OF_RANKS) + x;
 }
 
 void Board::setCastlingSides(string fen){
@@ -160,8 +175,59 @@ void Board::setCastlingSides(string fen){
     }
     if (fen.find("q") != string::npos){
         castlingSides[3] = 1;
+    }   
+}
+
+void Board::setMoveAmount(string fen){
+    string delimiter = " ";
+    size_t pos = fen.find(delimiter);
+    string token;
+
+    halfmoves = stoi(fen.substr(0, pos));
+
+    fen.erase(0, pos + delimiter.size());
+
+    fullmoves = stoi(fen);
+}
+
+string Board::pieceToString(piece p){
+    if (p == whitePawn){
+        return "P";
     }
-
-
-    
+    else if (p == blackPawn){
+        return "p";
+    }
+    else if (p == whiteKnight){
+        return "N";
+    }
+    else if (p == blackKnight){
+        return "n";
+    }
+    else if (p == whiteBishop){
+        return "B";
+    }
+    else if (p == blackBishop){
+        return "b";
+    }
+    else if (p == whiteRook){
+        return "R";
+    }
+    else if (p == blackRook){
+        return "r";
+    }
+    else if (p == whiteQueen){
+        return "Q";
+    }
+    else if (p == blackQueen){
+        return "q";
+    }
+    else if (p == whiteKing){
+        return "K";
+    }
+    else if (p == blackKing){
+        return "k";
+    }
+    else{
+        return ".";
+    }
 }

@@ -3,6 +3,6 @@
 
 #include "board.h"
 
-Board board();
+Board board;
 
 #endif
