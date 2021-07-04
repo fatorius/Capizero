@@ -56,7 +56,7 @@ void Board::setPosition(string newFen){
                 whitePawns[currentSquare] = 1;
                 break;
             case '/':
-                currentSquare -= 15;
+                currentSquare -= 17;
                 break;
             case '2':
                 currentSquare += 1;
