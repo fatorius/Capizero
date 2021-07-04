@@ -5,6 +5,14 @@
 #include <iostream>
 using namespace std;
 
+Square::Square(coordinate c1, coordinate c2){
+    x = c1;
+    y = c2;
+}
+
+square Square::convert(){
+    return (y * NUMBER_OF_RANKS) + x;
+}
 
 Board::Board(string fen){
     currentPosition = fen;
@@ -109,11 +117,114 @@ void Board::setPosition(string newFen){
 }
 
 void Board::printBoard(){
-    for (int x = 0; x < 8; x++){
+    for (int x = 7; x >= 0; x--){
         for (int y = 0; y < 8; y++){
             cout<<" "<<pieceToString(getPiece(y, x))<<" ";
         }
         cout<<endl;
+    }
+}
+
+void Board::makeMove(moves san){
+    // e2e4
+    piece promotedPiece;
+    piece movedPiece;
+    string originalSquare = san.substr(0, 2);
+    string destinationSquare = san.substr(2, 2);
+
+    //checks if there's a promotion
+    if (!isdigit(san[san.size() - 1])){
+        promotedPiece = getPromotedPiece(san[san.size() - 1]);
+    }
+
+    Square original(getFile(originalSquare), getRank(originalSquare));
+    Square destination(getFile(destinationSquare), getRank(destinationSquare));
+
+    movedPiece = getPiece(original.x, original. y);
+
+    setPiece(original, noPiece);
+    setPiece(destination, movedPiece);
+}
+
+void Board::setCastlingSides(string fen){
+    if (fen.find("K") != string::npos){
+        castlingSides[0] = 1;
+    }
+    if (fen.find("Q") != string::npos){
+        castlingSides[1] = 1;
+    }
+    if (fen.find("k") != string::npos){
+        castlingSides[2] = 1;
+    }
+    if (fen.find("q") != string::npos){
+        castlingSides[3] = 1;
+    }   
+}
+
+void Board::setMoveAmount(string fen){
+    string delimiter = " ";
+    size_t pos = fen.find(delimiter);
+    string token;
+
+    halfmoves = stoi(fen.substr(0, pos));
+
+    fen.erase(0, pos + delimiter.size());
+
+    fullmoves = stoi(fen);
+}
+
+void Board::setPiece(Square s, piece target){
+    switch (target){
+        case whitePawn:
+            whitePawns[s.convert()] = 1;
+            break;
+        case blackPawn:
+            blackPawns[s.convert()] = 1;
+            break;
+        case whiteKnight:
+            whiteKnights[s.convert()] = 1;
+            break;
+        case blackKnight:
+            blackKnights[s.convert()] = 1;
+            break;
+        case whiteBishop:
+            whiteBishops[s.convert()] = 1;
+            break;
+        case blackBishop:
+            blackBishops[s.convert()] = 1;
+            break;
+        case whiteRook:
+            whiteRooks[s.convert()] = 1;
+            break;
+        case blackRook:
+            blackRooks[s.convert()] = 1;
+            break;
+        case whiteQueen:
+            whiteQueens[s.convert()] = 1;
+            break;
+        case blackQueen:
+            blackQueens[s.convert()] = 1;
+            break;
+        case whiteKing:
+            whiteKings[s.convert()] = 1;
+            break;
+        case blackKing:
+            blackKings[s.convert()] = 1;
+            break;
+        case noPiece:
+            whitePawns[s.convert()] = 0;
+            blackPawns[s.convert()] = 0;
+            whiteKnights[s.convert()] = 0;
+            blackKnights[s.convert()] = 0;
+            whiteBishops[s.convert()] = 0;
+            blackBishops[s.convert()] = 0;
+            whiteRooks[s.convert()] = 0;
+            blackRooks[s.convert()] = 0;
+            whiteQueens[s.convert()] = 0;
+            blackQueens[s.convert()] = 0;
+            whiteKings[s.convert()] = 0;
+            blackKings[s.convert()] = 0;
+            break;
     }
 }
 
@@ -163,33 +274,6 @@ square Board::coordinateToSquare(coordinate x, coordinate y){
     return (y * NUMBER_OF_RANKS) + x;
 }
 
-void Board::setCastlingSides(string fen){
-    if (fen.find("K") != string::npos){
-        castlingSides[0] = 1;
-    }
-    if (fen.find("Q") != string::npos){
-        castlingSides[1] = 1;
-    }
-    if (fen.find("k") != string::npos){
-        castlingSides[2] = 1;
-    }
-    if (fen.find("q") != string::npos){
-        castlingSides[3] = 1;
-    }   
-}
-
-void Board::setMoveAmount(string fen){
-    string delimiter = " ";
-    size_t pos = fen.find(delimiter);
-    string token;
-
-    halfmoves = stoi(fen.substr(0, pos));
-
-    fen.erase(0, pos + delimiter.size());
-
-    fullmoves = stoi(fen);
-}
-
 string Board::pieceToString(piece p){
     if (p == whitePawn){
         return "P";
@@ -229,5 +313,89 @@ string Board::pieceToString(piece p){
     }
     else{
         return ".";
+    }
+}
+
+piece Board::getPromotedPiece(char p){
+
+    piece promotedPiece;
+
+    switch(p){
+        case 'N':
+            promotedPiece = whiteKnight;
+            break;
+        case 'n':
+            promotedPiece = blackKnight;
+            break;
+        case 'B':
+            promotedPiece = whiteBishop;
+            break;
+        case 'b':
+            promotedPiece = blackBishop;
+            break;
+        case 'R':
+            promotedPiece = whiteRook;
+            break;
+        case 'r':   
+            promotedPiece = blackRook;
+            break;
+        case 'Q':
+            promotedPiece = whiteQueen;
+            break;
+        case 'q':
+            promotedPiece = blackQueen;
+            break;
+    }
+
+    return promotedPiece;
+}
+
+coordinate Board::getFile(string s){
+    char rank = s[0];
+    
+    switch (rank){
+        case 'a':
+            return 0;
+        case 'b':
+            return 1;
+        case 'c':
+            return 2;
+        case 'd':
+            return 3;
+        case 'e':
+            return 4;
+        case 'f':
+            return 5;
+        case 'g':
+            return 6;
+        case 'h':
+            return 7;
+        default:
+            return -1;
+    }
+}
+
+coordinate Board::getRank(string s){
+    char rank = s[1];
+    
+    switch (rank){
+        case '1':
+            return 0;
+        case '2':
+            return 1;
+        case '3':
+            return 2;
+        case '4':
+            return 3;
+        case '5':
+            return 4;
+        case '6':
+            return 5;
+        case '7':
+            return 6;
+        case '8':
+            return 7;
+        default:
+            return -1;
     }
 }

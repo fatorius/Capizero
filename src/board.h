@@ -18,6 +18,7 @@ typedef bool side;
 typedef int_least8_t piece;
 typedef int_fast8_t coordinate;
 typedef int_least8_t square;
+typedef string moves; 
 
 const piece noPiece = 0;
 const piece whitePawn = 1;
@@ -32,6 +33,15 @@ const piece whiteQueen = 9;
 const piece blackQueen = 10;
 const piece whiteKing = 11;
 const piece blackKing = 12;
+
+class Square{
+    public:
+        Square(coordinate c1, coordinate c2);
+        coordinate x;
+        coordinate y;
+
+        square convert();
+};
 
 class Board{
 
@@ -62,13 +72,18 @@ class Board{
 
         void setPosition(string newFen);
         void printBoard();
+        void makeMove(moves san);
         piece getPiece(coordinate x, coordinate y);
 
     private:
-        square coordinateToSquare(coordinate x, coordinate y);
         void setCastlingSides(string fen);
         void setMoveAmount(string fen);
+        void setPiece(Square s, piece target);
         string pieceToString(piece piece);
-};
+        square coordinateToSquare(coordinate x, coordinate y);
+        piece getPromotedPiece(char p);
+        coordinate getRank(string s);
+        coordinate getFile(string s);
+}; 
 
 #endif
