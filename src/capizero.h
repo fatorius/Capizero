@@ -1,7 +1,7 @@
 #ifndef CAPIZERO
 #define CAPIZERO
 
-#include "board.h"
+#include "generate.h"
 
 Board board;
 

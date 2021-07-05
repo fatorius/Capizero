@@ -38,6 +38,10 @@ const piece blackKing = 12;
 coordinate getRank(string s);
 coordinate getFile(string s);
 
+bool isWhitePiece(piece p);
+
+piece invertColor(piece p);
+
 class Square{
     public:
         Square(squareString s);
@@ -78,6 +82,7 @@ class Board{
         void setPosition(string newFen);
         void printBoard();
         void makeMove(moves san);
+        void colorflip();
         piece getPiece(coordinate x, coordinate y);
 
     private:

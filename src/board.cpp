@@ -1,9 +1,11 @@
 #include "board.h"
 
 #include <ctype.h>
-#include <string>
 #include <cstring>
 #include <iostream>
+
+#include <chrono>
+
 using namespace std;
 
 coordinate getFile(string s){
@@ -56,6 +58,28 @@ coordinate getRank(string s){
     }
 }
 
+bool isWhitePiece(piece p){
+    if (p == whitePawn or p == whiteKnight or p == whiteBishop or p == whiteRook
+        or p == whiteQueen or p == whiteKing){
+            return true;
+    }
+    else{
+        return false;
+    }
+}
+
+piece invertColor(piece p){
+    if (p == noPiece){
+        return noPiece;
+    }
+    if (isWhitePiece(p)){
+        return p+1;
+    }
+    else{
+        return p-1;
+    }
+}
+
 Square::Square(squareString s){
     x = getFile(s);
     y = getRank(s);
@@ -73,7 +97,13 @@ square Square::convert(){
 Board::Board(string fen){
     currentPosition = fen;
 
+    auto start = chrono::high_resolution_clock::now();
     setPosition(currentPosition);
+    auto stop = chrono::high_resolution_clock::now();
+
+    auto duration = chrono::duration_cast<chrono::microseconds>(stop-start);
+
+    cout<<duration.count();
 }
 
 void Board::setPosition(string newFen){
@@ -302,6 +332,20 @@ void Board::makeMove(moves san){
     }
 }
 
+void Board::colorflip(){
+    for (int y = 0; y < 8; y++){
+        for (int x = 0; x < 4; x++){
+            piece p1 = invertColor(getPiece(x, y));
+            piece p2 = invertColor(getPiece(7-x, y));
+            
+            Square s1(x, y);
+            Square s2(7-x, y);
+            setPiece(s2, p1);
+            setPiece(s1, p2);
+        }
+    }
+}
+
 void Board::setCastlingSides(string fen){
     if (fen.find("K") != string::npos){
         castlingSides[0] = 1;
@@ -330,56 +374,57 @@ void Board::setMoveAmount(string fen){
 }
 
 void Board::setPiece(Square s, piece target){
+    square converted = s.convert();
+
+    whitePawns[converted] = 0;
+    blackPawns[converted] = 0;
+    whiteKnights[converted] = 0;
+    blackKnights[converted] = 0;
+    whiteBishops[converted] = 0;
+    blackBishops[converted] = 0;
+    whiteRooks[converted] = 0;
+    blackRooks[converted] = 0;
+    whiteQueens[converted] = 0;
+    blackQueens[converted] = 0;
+    whiteKings[converted] = 0;
+    blackKings[converted] = 0;
+    
     switch (target){
         case whitePawn:
-            whitePawns[s.convert()] = 1;
+            whitePawns[converted] = 1;
             break;
         case blackPawn:
-            blackPawns[s.convert()] = 1;
+            blackPawns[converted] = 1;
             break;
         case whiteKnight:
-            whiteKnights[s.convert()] = 1;
+            whiteKnights[converted] = 1;
             break;
         case blackKnight:
-            blackKnights[s.convert()] = 1;
+            blackKnights[converted] = 1;
             break;
         case whiteBishop:
-            whiteBishops[s.convert()] = 1;
+            whiteBishops[converted] = 1;
             break;
         case blackBishop:
-            blackBishops[s.convert()] = 1;
+            blackBishops[converted] = 1;
             break;
         case whiteRook:
-            whiteRooks[s.convert()] = 1;
+            whiteRooks[converted] = 1;
             break;
         case blackRook:
-            blackRooks[s.convert()] = 1;
+            blackRooks[converted] = 1;
             break;
         case whiteQueen:
-            whiteQueens[s.convert()] = 1;
+            whiteQueens[converted] = 1;
             break;
         case blackQueen:
-            blackQueens[s.convert()] = 1;
+            blackQueens[converted] = 1;
             break;
         case whiteKing:
-            whiteKings[s.convert()] = 1;
+            whiteKings[converted] = 1;
             break;
         case blackKing:
-            blackKings[s.convert()] = 1;
-            break;
-        case noPiece:
-            whitePawns[s.convert()] = 0;
-            blackPawns[s.convert()] = 0;
-            whiteKnights[s.convert()] = 0;
-            blackKnights[s.convert()] = 0;
-            whiteBishops[s.convert()] = 0;
-            blackBishops[s.convert()] = 0;
-            whiteRooks[s.convert()] = 0;
-            blackRooks[s.convert()] = 0;
-            whiteQueens[s.convert()] = 0;
-            blackQueens[s.convert()] = 0;
-            whiteKings[s.convert()] = 0;
-            blackKings[s.convert()] = 0;
+            blackKings[converted] = 1;
             break;
     }
 }
