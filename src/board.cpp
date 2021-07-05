@@ -4,8 +4,6 @@
 #include <cstring>
 #include <iostream>
 
-#include <chrono>
-
 using namespace std;
 
 coordinate getFile(string s){
@@ -96,14 +94,7 @@ square Square::convert(){
 
 Board::Board(string fen){
     currentPosition = fen;
-
-    auto start = chrono::high_resolution_clock::now();
     setPosition(currentPosition);
-    auto stop = chrono::high_resolution_clock::now();
-
-    auto duration = chrono::duration_cast<chrono::microseconds>(stop-start);
-
-    cout<<duration.count();
 }
 
 void Board::setPosition(string newFen){
