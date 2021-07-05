@@ -1,5 +1,5 @@
-#ifndef CAPIZERO_H
-#define CAPIZERO_H
+#ifndef CAPIZERO
+#define CAPIZERO
 
 #include "board.h"
 

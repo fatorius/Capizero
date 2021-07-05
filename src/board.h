@@ -1,5 +1,5 @@
-#ifndef BOARD_H
-#define BOARD_H
+#ifndef BOARD
+#define BOARD
 
 #include <string>
 #include <bitset>
@@ -11,14 +11,15 @@ using namespace std;
 #define NUMBER_OF_RANKS 8
 #define NUMBER_OF_FILES 8
 
-#define WHITE true;
-#define BLACK false;
+#define WHITE true
+#define BLACK false
 
 typedef bool side;
 typedef int_least8_t piece;
 typedef int_fast8_t coordinate;
 typedef int_least8_t square;
-typedef string moves; 
+typedef string moves;
+typedef string squareString; 
 
 const piece noPiece = 0;
 const piece whitePawn = 1;
@@ -34,8 +35,12 @@ const piece blackQueen = 10;
 const piece whiteKing = 11;
 const piece blackKing = 12;
 
+coordinate getRank(string s);
+coordinate getFile(string s);
+
 class Square{
     public:
+        Square(squareString s);
         Square(coordinate c1, coordinate c2);
         coordinate x;
         coordinate y;
@@ -44,7 +49,6 @@ class Square{
 };
 
 class Board{
-
     public:
         Board(string fen = INITIAL_POSITION);
 
@@ -63,7 +67,8 @@ class Board{
         bitset<NUMBER_OF_SQUARES> whiteKings;
         bitset<NUMBER_OF_SQUARES> blackKings;
 
-        side side;
+        side turn;
+        squareString enPassantSquare;
 
         bitset<4> castlingSides = 0x0;
 
@@ -79,11 +84,11 @@ class Board{
         void setCastlingSides(string fen);
         void setMoveAmount(string fen);
         void setPiece(Square s, piece target);
+        void setEnPassantSquare(string fen);
+        void setEnPassantSquareFromMove(string fen);
         string pieceToString(piece piece);
         square coordinateToSquare(coordinate x, coordinate y);
         piece getPromotedPiece(char p);
-        coordinate getRank(string s);
-        coordinate getFile(string s);
 }; 
 
 #endif
