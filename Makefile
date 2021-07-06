@@ -5,7 +5,7 @@ capizero.o: ./src/capizero.cpp
 	@ g++ -c ./src/capizero.cpp -o ./src/capizero.o
 
 generate.o: ./src/generate.cpp
-	@ g++ -c ./src/generate.cpp -i ./src/generate.o
+	@ g++ -c ./src/generate.cpp -o ./src/generate.o
 
 board.o: ./src/board.cpp
 	@ g++ -c ./src/board.cpp -o ./src/board.o

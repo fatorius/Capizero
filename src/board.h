@@ -21,6 +21,7 @@ typedef int_least8_t square;
 typedef string moves;
 typedef string squareString; 
 
+const piece outOfSquare = -1;
 const piece noPiece = 0;
 const piece whitePawn = 1;
 const piece blackPawn = 2;
@@ -50,6 +51,11 @@ class Square{
         coordinate y;
 
         square convert();
+        squareString getString();
+
+    private: 
+        string coordToFile();
+        string coordToRank();
 };
 
 class Board{
@@ -83,6 +89,8 @@ class Board{
         void printBoard();
         void makeMove(moves san);
         void colorflip();
+        piece getPiece(square s);
+        piece getPiece(Square sq);
         piece getPiece(coordinate x, coordinate y);
 
     private:

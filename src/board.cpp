@@ -92,6 +92,52 @@ square Square::convert(){
     return (y * NUMBER_OF_RANKS) + x;
 }
 
+squareString Square::getString(){
+    return coordToFile() + coordToRank();
+}
+
+string Square::coordToFile(){
+    switch(x){
+        case 0:
+            return "a";
+        case 1:
+            return "b";
+        case 2:
+            return "c";
+        case 3:
+            return "d";
+        case 4:
+            return "e";
+        case 5:
+            return "f";
+        case 6:
+            return "g";
+        case 7:
+            return "h";
+    }
+}
+
+string Square::coordToRank(){
+    switch (y){
+        case 0:
+            return "1";
+        case 1:
+            return "2";
+        case 2:
+            return "3";
+        case 3:
+            return "4";
+        case 4:
+            return "5";
+        case 5:
+            return "6";
+        case 6:
+            return "7";
+        case 7:
+            return "8"; 
+    }
+}
+
 Board::Board(string fen){
     currentPosition = fen;
     setPosition(currentPosition);
@@ -529,7 +575,101 @@ void Board::setEnPassantSquareFromMove(string fen){
 }
 
 piece Board::getPiece(coordinate x, coordinate y){
+    if (x < 0 or x > 7 or y < 0 or y > 7){
+        return outOfSquare;
+    }
+
     square s = coordinateToSquare(x, y);
+
+    if (whitePawns[s]){
+        return whitePawn;
+    }
+    else if (blackPawns[s]){
+        return blackPawn;
+    }
+    else if (whiteKnights[s]){
+        return whiteKnight;
+    }
+    else if (blackKnights[s]){
+        return blackKnight;
+    }
+    else if (whiteBishops[s]){
+        return whiteBishop;
+    }
+    else if (blackBishops[s]){
+        return blackBishop;
+    }
+    else if (whiteRooks[s]){
+        return whiteRook;
+    }
+    else if (blackRooks[s]){
+        return blackRook;
+    }
+    else if (whiteQueens[s]){
+        return whiteQueen;
+    }
+    else if (blackQueens[s]){
+        return blackQueen;
+    }
+    else if (whiteKings[s]){
+        return whiteKing;
+    }
+    else if (blackKings[s]){
+        return blackKing;
+    }
+    return noPiece;
+}
+
+piece Board::getPiece(square s){
+    if (s < 0 or s > 63){
+        return outOfSquare;
+    }
+
+    if (whitePawns[s]){
+        return whitePawn;
+    }
+    else if (blackPawns[s]){
+        return blackPawn;
+    }
+    else if (whiteKnights[s]){
+        return whiteKnight;
+    }
+    else if (blackKnights[s]){
+        return blackKnight;
+    }
+    else if (whiteBishops[s]){
+        return whiteBishop;
+    }
+    else if (blackBishops[s]){
+        return blackBishop;
+    }
+    else if (whiteRooks[s]){
+        return whiteRook;
+    }
+    else if (blackRooks[s]){
+        return blackRook;
+    }
+    else if (whiteQueens[s]){
+        return whiteQueen;
+    }
+    else if (blackQueens[s]){
+        return blackQueen;
+    }
+    else if (whiteKings[s]){
+        return whiteKing;
+    }
+    else if (blackKings[s]){
+        return blackKing;
+    }
+    return noPiece;
+}
+
+piece Board::getPiece(Square sq){
+    if (sq.x < 0 or sq.x > 7 or sq.y < 0 or sq.y > 7){
+        return outOfSquare;
+    }
+
+    square s = sq.convert();
 
     if (whitePawns[s]){
         return whitePawn;
