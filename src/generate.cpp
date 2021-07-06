@@ -39,7 +39,7 @@ vector<string> generate(Board b, Square s, piece p, side t){
             if (!isPawnBlocked(b, s)){
                 Square dest(s.x, s.y+1);
                 if (s.y == 6){
-                    for (int pie = 1; pie <= 11; pie += 2){
+                    for (int_fast8_t pie = 1; pie <= 11; pie += 2){
                         array.push_back(makeMoves(s, dest, t, pie));
                     }
                 }
@@ -90,9 +90,9 @@ vector<string> generate(Board b, Square s, piece p, side t){
             break;
 
         case whiteKnight:
-            for (int i = 0; i < 8; i++){
-                int ix = ((i > 3) + 1) * (((i % 4) > 1) * 2 - 1);
-                int iy = (2 - (i > 3)) * ((i % 2 == 0) * 2 - 1);
+            for (int_fast8_t i = 0; i < 8; i++){
+                int_fast8_t ix = ((i > 3) + 1) * (((i % 4) > 1) * 2 - 1);
+                int_fast8_t iy = (2 - (i > 3)) * ((i % 2 == 0) * 2 - 1);
 
                 piece attackedPiece = b.getPiece(s.x + ix, s.y + iy);
 
@@ -104,16 +104,81 @@ vector<string> generate(Board b, Square s, piece p, side t){
             break;
 
         case whiteBishop:
+            for (int_fast8_t i = 0; i < 4; i++){
+                int_fast8_t ix = ((i > 1) * 2 - 1);
+                int_fast8_t iy = ((i % 2 == 0) * 2 - 1);
+            
+                for (int_fast8_t d = 1; d < 8; d++){
+                    piece attackedPiece = b.getPiece(s.x + (d * ix), s.y + (d * iy));
+
+                    if (attackedPiece == noPiece or attackedPiece == isBlackPiece(attackedPiece)){
+                        Square bA(s.x + (d * ix), s.y + (d * iy));
+                        array.push_back(makeMoves(s, bA, t));
+                    }
+                    else{
+                        break;
+                    }
+                }
+            }
             break;
+
         case whiteRook:
+                for (int_fast8_t i = 0; i < 4; i++){
+                    int_fast8_t ix = (i == 0 ? -1 : i == 1 ? 1 : 0);
+                    int_fast8_t iy = (i == 2 ? -1 : i == 3 ? 1 : 0);
+                    
+                    for (int_fast8_t d = 1; d < 8; d++){
+                        piece attackedPiece = b.getPiece(s.x + (d * ix), s.y + (d * iy));
+
+                        if (attackedPiece == noPiece or attackedPiece == isBlackPiece(attackedPiece)){
+                            Square rA(s.x + (d * ix), s.y + (d * iy));
+                            array.push_back(makeMoves(s, rA, t));
+                        }
+                        else{
+                            break;
+                        }
+                    }
+                }
             break;
+            
         case whiteQueen:
+            for (int_fast8_t i = 0; i < 8; i++){
+                int_fast8_t ix = (i + (i > 3)) % 3 - 1;
+                int_fast8_t iy = (((i + (i > 3)) / 3) << 0) - 1;
+
+                for (int_fast8_t d = 1; d < 8; d++){
+                    piece attackedPiece = b.getPiece(s.x + (d * ix), s.y + (d * iy));
+
+                    if (attackedPiece == noPiece or attackedPiece == isBlackPiece(attackedPiece)){
+                        Square qA(s.x + (d * ix), s.y + (d * iy));
+                        array.push_back(makeMoves(s, qA, t));
+                    }
+                    else{
+                        break;
+                    }
+                }
+            }
             break;
+
         case whiteKing:
-            break;       
-        default:
-            break;
+            for (int_fast8_t i = 0; i < 8; i++){
+                int_fast8_t ix = (i + (i > 3)) % 3 - 1;
+                int_fast8_t iy = (((i + (i > 3)) / 3) << 0) - 1;
+                
+                piece attackedPiece = b.getPiece(s.x + ix, s.y + iy);
+
+                if (attackedPiece == noPiece or attackedPiece == isBlackPiece(attackedPiece)){
+                    // TODO check if square isn't attacked
+                    Square kA(s.x + ix, s.y + iy);
+                    array.push_back(makeMoves(s, kA, t));
+                }
+                else{
+                    break;
+                }
+            }
+        break;
     }
+
     return array;
 }
 
@@ -121,8 +186,8 @@ vector<string> returnMoves(Board b){
     vector<string> moves;
     side t = b.turn;
 
-    for (int x = 0; x < 8; x++){
-        for (int y = 0; y < 8; y++){
+    for (int_fast8_t x = 0; x < 8; x++){
+        for (int_fast8_t y = 0; y < 8; y++){
             Square s(x, y);
             piece p = b.getPiece(s);
             if (p == noPiece){
@@ -130,6 +195,7 @@ vector<string> returnMoves(Board b){
             }
             vector<string> tempMoves = generate(b, s, p, t);
             for (unsigned int i = 0; i < tempMoves.size(); i++){
+                // TODO check if piece is pinned before do this function
                 moves.push_back(tempMoves[i]);
             }
         }
