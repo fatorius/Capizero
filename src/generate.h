@@ -6,8 +6,10 @@
 #include <vector>
 using namespace std;
 
-moves makeMoves(square x, square y);
-string generate(Square s);
+bool isEnPassantAdjacent(Square s, Square ep);
+bool isPawnBlocked(Board b, Square s);
+moves makeMoves(square x, square y, side t, piece promote);
+vector<string> generate(Board b, Square s, piece p, side t);
 vector<string> returnMoves(Board b);
 
 #endif

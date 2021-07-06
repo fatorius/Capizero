@@ -66,6 +66,58 @@ bool isWhitePiece(piece p){
     }
 }
 
+bool isBlackPiece(piece p){
+    if (p == blackPawn or p == blackKnight or p == blackBishop or p == blackRook
+        or p == blackQueen or p == blackKing){
+            return true;
+    }
+    else{
+        return false;
+    }
+}
+
+string pieceToString(piece p){
+    if (p == whitePawn){
+        return "P";
+    }
+    else if (p == blackPawn){
+        return "p";
+    }
+    else if (p == whiteKnight){
+        return "N";
+    }
+    else if (p == blackKnight){
+        return "n";
+    }
+    else if (p == whiteBishop){
+        return "B";
+    }
+    else if (p == blackBishop){
+        return "b";
+    }
+    else if (p == whiteRook){
+        return "R";
+    }
+    else if (p == blackRook){
+        return "r";
+    }
+    else if (p == whiteQueen){
+        return "Q";
+    }
+    else if (p == blackQueen){
+        return "q";
+    }
+    else if (p == whiteKing){
+        return "K";
+    }
+    else if (p == blackKing){
+        return "k";
+    }
+    else{
+        return ".";
+    }
+}
+
 piece invertColor(piece p){
     if (p == noPiece){
         return noPiece;
@@ -266,6 +318,7 @@ void Board::printBoard(){
 void Board::makeMove(moves san){
     piece promotedPiece = noPiece;
     piece movedPiece;
+    piece capturedPiece;
     string originalSquare = san.substr(0, 2);
     string destinationSquare = san.substr(2, 2);
 
@@ -338,8 +391,14 @@ void Board::makeMove(moves san){
         Square destination(getFile(destinationSquare), getRank(destinationSquare));
 
         movedPiece = getPiece(original.x, original. y);
+        capturedPiece = getPiece(destination.x, destination.y);
+
+        if (capturedPiece != noPiece){
+            halfmoves = -1;
+        }
 
         if (movedPiece == whitePawn or movedPiece == blackPawn){
+            halfmoves = -1;
             setEnPassantSquareFromMove(san);
             Square enPassant(enPassantSquare);
             if (destination.x == enPassant.x and destination.y == enPassant.y){
@@ -362,21 +421,23 @@ void Board::makeMove(moves san){
     }
     
     if (turn == WHITE){
+        fullmoves++;
         turn = BLACK;
     }
     else{
         turn = WHITE;
     }
+    halfmoves++;
 }
 
 void Board::colorflip(){
-    for (int y = 0; y < 8; y++){
-        for (int x = 0; x < 4; x++){
+    for (int y = 0; y < 4; y++){
+        for (int x = 0; x < 8; x++){
             piece p1 = invertColor(getPiece(x, y));
-            piece p2 = invertColor(getPiece(7-x, y));
+            piece p2 = invertColor(getPiece(x, 7-y));
             
             Square s1(x, y);
-            Square s2(7-x, y);
+            Square s2(x, 7-y);
             setPiece(s2, p1);
             setPiece(s1, p2);
         }
@@ -712,48 +773,6 @@ piece Board::getPiece(Square sq){
 
 square Board::coordinateToSquare(coordinate x, coordinate y){
     return (y * NUMBER_OF_RANKS) + x;
-}
-
-string Board::pieceToString(piece p){
-    if (p == whitePawn){
-        return "P";
-    }
-    else if (p == blackPawn){
-        return "p";
-    }
-    else if (p == whiteKnight){
-        return "N";
-    }
-    else if (p == blackKnight){
-        return "n";
-    }
-    else if (p == whiteBishop){
-        return "B";
-    }
-    else if (p == blackBishop){
-        return "b";
-    }
-    else if (p == whiteRook){
-        return "R";
-    }
-    else if (p == blackRook){
-        return "r";
-    }
-    else if (p == whiteQueen){
-        return "Q";
-    }
-    else if (p == blackQueen){
-        return "q";
-    }
-    else if (p == whiteKing){
-        return "K";
-    }
-    else if (p == blackKing){
-        return "k";
-    }
-    else{
-        return ".";
-    }
 }
 
 piece Board::getPromotedPiece(char p){

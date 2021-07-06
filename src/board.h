@@ -40,8 +40,11 @@ coordinate getRank(string s);
 coordinate getFile(string s);
 
 bool isWhitePiece(piece p);
+bool isBlackPiece(piece p);
 
 piece invertColor(piece p);
+
+string pieceToString(piece piece);
 
 class Square{
     public:
@@ -99,7 +102,6 @@ class Board{
         void setPiece(Square s, piece target);
         void setEnPassantSquare(string fen);
         void setEnPassantSquareFromMove(string fen);
-        string pieceToString(piece piece);
         square coordinateToSquare(coordinate x, coordinate y);
         piece getPromotedPiece(char p);
 }; 

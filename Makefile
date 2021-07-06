@@ -1,5 +1,5 @@
 capizero: ./src/capizero.o ./src/board.o ./src/generate.o 
-	@ g++ -o capizero ./src/capizero.o ./src/board.o
+	@ g++ -o capizero ./src/capizero.o ./src/board.o ./src/generate.o
 
 capizero.o: ./src/capizero.cpp
 	@ g++ -c ./src/capizero.cpp -o ./src/capizero.o
