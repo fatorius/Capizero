@@ -22,6 +22,15 @@ bool isPinned(Board b, Square s){
     }
 }
 
+bool isCheck(Board b){
+    if (attacks(b, b.getKingSquare()) > 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 direction pinnedDirection(Board b, Square s){
     for (int_fast8_t i = 0; i <  8; i++){
         int_fast8_t ix = (i + (i > 3)) % 3 - 1;

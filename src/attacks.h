@@ -8,6 +8,8 @@ typedef int_least8_t direction;
 bool isPinned(Board b, Square s);
 direction pinnedDirection(Board b, Square s);
 
+bool isCheck(Board b);
+
 // checks if that specific piece attacks a given square
 bool doesPawnAttacks(Board b, Square target, Square originalSquare);
 bool doesKnightAttacks(Board b, Square target, Square originalSquare);

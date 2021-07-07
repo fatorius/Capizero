@@ -38,6 +38,7 @@ moves makeMoves(Square x, Square y, side t, piece promote=noPiece){
     }
 }
 
+// TODO generate captures
 vector<string> generate(Board b, Square s, piece p, side t){
     vector<string> array;
     direction pin = pinnedDirection(b, s);
@@ -187,12 +188,41 @@ vector<string> generate(Board b, Square s, piece p, side t){
                 
                 if ((attackedPiece == noPiece or attackedPiece == isBlackPiece(attackedPiece)) and (attacks(b, invertedS) == 0)){
                     b.colorflip();
-                    // TODO check if square isn't attacked
                     Square kA(s.x + ix, s.y + iy);
                     array.push_back(makeMoves(s, kA, t));
                 }
                 else{
                     b.colorflip();
+                }
+            }
+            if (b.castlingSides != NOCASTLING){
+                if (b.turn == WHITE){
+                    if (b.castlingSides[WHITEKINGSIDE]){
+                        if (b.getPiece(5, 0) == noPiece and b.getPiece(6, 0) == noPiece and
+                            attacks(b, Square(5, 0)) == 0 and attacks(b, Square(6, 0)) == 0){
+                                array.push_back("o-o");
+                        }
+                    }
+                    if (b.castlingSides[WHITEQUEENSIDE]){
+                        if (b.getPiece(1, 0) == noPiece and b.getPiece(2, 0) == noPiece and b.getPiece(3, 0) == noPiece and
+                            attacks(b, Square(1, 0)) == 0 and attacks(b, Square(2, 0)) == 0 and attacks(b, Square(3, 0)) == 0){
+                                array.push_back("o-o-o");
+                        }
+                    }
+                }
+                else{
+                    if (b.castlingSides[BLACKKINGSIDE]){
+                        if (b.getPiece(5, 0) == noPiece and b.getPiece(6, 0) == noPiece and
+                            attacks(b, Square(5, 0)) == 0 and attacks(b, Square(6, 0)) == 0){
+                                array.push_back("o-o");
+                        }
+                    }
+                    if (b.castlingSides[BLACKQUEENSIDE]){
+                        if (b.getPiece(1, 0) == noPiece and b.getPiece(2, 0) == noPiece and b.getPiece(3, 0) == noPiece and
+                            attacks(b, Square(1, 0)) == 0 and attacks(b, Square(2, 0)) == 0 and attacks(b, Square(3, 0)) == 0){
+                                array.push_back("o-o-o");
+                        }
+                    }
                 }
             }
             break;
@@ -212,9 +242,9 @@ vector<string> returnMoves(Board b){
             if (p == noPiece){
                 continue;
             }
+            // TODO generate a special generation function for positions where the king's in check
             vector<string> tempMoves = generate(b, s, p, t);
             for (unsigned int i = 0; i < tempMoves.size(); i++){
-                // TODO check if king is in check before appending
                 moves.push_back(tempMoves[i]);
             }
         }

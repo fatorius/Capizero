@@ -14,6 +14,13 @@ using namespace std;
 #define WHITE true
 #define BLACK false
 
+#define WHITEKINGSIDE 0
+#define WHITEQUEENSIDE 1
+#define BLACKKINGSIDE 2
+#define BLACKQUEENSIDE 3
+
+#define NOCASTLING 0x0
+
 typedef bool side;
 typedef int_least8_t piece;
 typedef int_fast8_t coordinate;
@@ -95,6 +102,9 @@ class Board{
         piece getPiece(square s);
         piece getPiece(Square sq);
         piece getPiece(coordinate x, coordinate y);
+        Square getKingSquare();
+
+        string fen();
 
     private:
         void setCastlingSides(string fen);

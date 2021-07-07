@@ -306,6 +306,16 @@ void Board::setPosition(string newFen){
     }
 }
 
+Square Board::getKingSquare(){
+    for (int x = 0; x < 8; x++){
+        for (int y = 0; y < 8; y++){
+            if (getPiece(x, y) == whiteKing){
+                return Square(x, y);
+            }
+        }
+    }
+}
+
 void Board::printBoard(){
     for (int x = 7; x >= 0; x--){
         for (int y = 0; y < 8; y++){
@@ -315,6 +325,7 @@ void Board::printBoard(){
     }
 }
 
+// TODO deny castling sides if pieces move
 void Board::makeMove(moves san){
     piece promotedPiece = noPiece;
     piece movedPiece;
@@ -428,6 +439,85 @@ void Board::makeMove(moves san){
         turn = WHITE;
     }
     halfmoves++;
+}
+
+string Board::fen(){
+	int_least8_t emptySquares = 0;
+    square squareCount = 0;
+
+	string positionFen = "";
+
+	while (true){
+		if (getPiece(squareCount) != noPiece){
+			if (emptySquares != 0){
+				positionFen += to_string(emptySquares);
+				emptySquares = 0;
+			}
+            positionFen.push_back(getPiece(squareCount));
+		}
+		else{
+			emptySquares++;
+		}
+
+		if (squareCount % 8 == 7){
+			if (emptySquares != 0){
+				positionFen += to_string(emptySquares);
+				emptySquares = 0;
+            }
+			if (squareCount != 63){
+				positionFen.push_back('/');
+			}
+		}
+
+		if (squareCount == 63){
+			break;
+		}
+	
+    	squareCount++;
+	}
+		
+    positionFen.push_back(' ');
+			
+	if (turn == WHITE){
+		positionFen.push_back('w');
+	}
+	else{
+		positionFen.push_back('b');
+	}
+
+	positionFen.push_back(' ');
+
+	if (castlingSides == 0x0){
+		positionFen.push_back('-');
+    }
+	else{
+		if (castlingSides[0]){
+		    positionFen.push_back('K');
+		}
+		if (castlingSides[1]){
+			positionFen.push_back('Q');
+		}
+		if (castlingSides[2]){
+			positionFen.push_back('k');
+		}
+		if (castlingSides[3]){
+			positionFen.push_back('q');
+		}
+	}
+			
+	positionFen.push_back(' ');
+
+	positionFen += enPassantSquare;
+
+	positionFen.push_back(' ');
+
+	positionFen += to_string(halfmoves);
+			
+	positionFen.push_back(' ');
+
+	positionFen += to_string(fullmoves);
+
+    return positionFen;
 }
 
 void Board::colorflip(){
