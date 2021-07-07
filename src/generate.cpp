@@ -214,7 +214,7 @@ vector<string> returnMoves(Board b){
             }
             vector<string> tempMoves = generate(b, s, p, t);
             for (unsigned int i = 0; i < tempMoves.size(); i++){
-                // TODO check if piece is pinned before do this function
+                // TODO check if king is in check before appending
                 moves.push_back(tempMoves[i]);
             }
         }

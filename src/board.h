@@ -5,9 +5,7 @@
 #include <bitset>
 using namespace std;
 
-
-#define INITIAL_POSITION "rnb1kbn1/pppppppp/5qr1/8/5P2/5K2/PPPPP1PP/RNBQ1BNR w KQkq - 0 1"
-//#define INITIAL_POSITION "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+#define INITIAL_POSITION "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 #define NUMBER_OF_SQUARES 64
 #define NUMBER_OF_RANKS 8
