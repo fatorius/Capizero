@@ -10,6 +10,7 @@ u64 perft(int depth, Board pos, bool first = true){
     vector<string> moves = returnMoves(pos);
 
     if (depth == 0){
+        cout<<pos.fen()<<endl;
         return 1ULL;
     }
 
@@ -19,7 +20,7 @@ u64 perft(int depth, Board pos, bool first = true){
         if (!isCheck(pos)){
             u64 n = perft(depth-1, pos, false);
             if (first){
-                cout<<moves[i]<<"->"<<n<<endl;
+                cout<<moves[i]<<" -> "<<n<<endl;
             }
             nodes += n;
         }

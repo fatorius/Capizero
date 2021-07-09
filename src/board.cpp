@@ -196,6 +196,19 @@ Board::Board(string fen){
 }
 
 void Board::setPosition(string newFen){
+    whitePawns = 0x0;
+    blackPawns = 0x0;
+    whiteKnights = 0x0;
+    blackKnights = 0x0;
+    whiteBishops = 0x0;
+    blackBishops = 0x0;
+    whiteRooks = 0x0;
+    blackRooks = 0x0;
+    whiteQueens = 0x0;
+    blackQueens = 0x0;
+    whiteKings = 0x0;
+    blackKings = 0x0;
+
     square currentSquare = 56;
     int endPosition;
     for (int pos = 0; pos < newFen.size(); pos++){
@@ -432,10 +445,10 @@ void Board::makeMove(moves san){
     }
     
     if (turn == WHITE){
-        fullmoves++;
         turn = BLACK;
     }
     else{
+        fullmoves++;
         turn = WHITE;
     }
     halfmoves++;
@@ -453,7 +466,7 @@ string Board::fen(){
 				positionFen += to_string(emptySquares);
 				emptySquares = 0;
 			}
-            positionFen.push_back(getPiece(squareCount));
+            positionFen += pieceToString(getPiece(squareCount));
 		}
 		else{
 			emptySquares++;

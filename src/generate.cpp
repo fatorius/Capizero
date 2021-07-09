@@ -234,6 +234,10 @@ vector<string> returnMoves(Board b){
     vector<string> moves;
     side t = b.turn;
 
+    if (t == BLACK){
+        b.colorflip();
+    }
+
     for (int_fast8_t x = 0; x < 8; x++){
         for (int_fast8_t y = 0; y < 8; y++){
             Square s(x, y);
@@ -248,5 +252,10 @@ vector<string> returnMoves(Board b){
             }
         }
     }
+
+    if (t == BLACK){
+        b.colorflip();
+    }
+
     return moves;
 }

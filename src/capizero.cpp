@@ -8,8 +8,7 @@ int main(){
     cout<<"capizero "<<CAPIZERO_VERSION<<endl;
     cout<<"by hugosouza"<<"\n\n";
 
-    while (true){
-        read();
+    while (read()){
     }
 
     return 0;

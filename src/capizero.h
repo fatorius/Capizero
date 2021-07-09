@@ -7,7 +7,7 @@
 
 Board board;
 
-void read(){
+bool read(){
     string cmd;
     cin>>cmd;
 
@@ -39,10 +39,40 @@ void read(){
         else{
             cout<<move<<" isnt a valid move"<<endl;
         }
-
+    }
+    else if (cmd == "flip"){
+        board.colorflip();
     }
     else if (cmd == "show"){
         board.printBoard();
+    }
+    else if (cmd == "fen"){
+        cout<<board.fen()<<endl;
+    }
+    else if (cmd == "exit"){
+        return false;
+    }
+    else if (cmd == "reset"){
+        board.setPosition(INITIAL_POSITION);
+    }
+    else if (cmd == "setposition"){
+        string f1;
+        string f2;
+        string f3;
+        string f4;
+        string f5;
+        string f6;
+
+        cin>>f1;
+        cin>>f2;
+        cin>>f3;
+        cin>>f4;
+        cin>>f5;
+        cin>>f6;
+        
+        board.setPosition(f1+" "+f2+" "+f3+" "+f4+" "+f5+" "+f6);
+
+        cout<<"fen sucessfully set to "<<f1+" "+f2+" "+f3+" "+f4+" "+f5+" "+f6<<endl;
     }
     else if (cmd == "help"){
         cout<<"moves -> print all valid moves on the position"<<endl;
@@ -54,6 +84,8 @@ void read(){
     }
 
     cout<<"\n";
+
+    return true;
 }
 
 #endif
