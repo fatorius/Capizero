@@ -1,5 +1,4 @@
 #include "generate.h"
-#include "attacks.h"
 
 #include <iostream>
 using namespace std;

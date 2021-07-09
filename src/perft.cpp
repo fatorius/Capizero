@@ -1,4 +1,3 @@
-#include "attacks.h"
 #include "generate.h"
 
 #include <iostream>

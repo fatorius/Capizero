@@ -1,7 +1,7 @@
 #ifndef GENERATE
 #define GENERATE
 
-#include "board.h"
+#include "attacks.h"
 
 #include <vector>
 using namespace std;
