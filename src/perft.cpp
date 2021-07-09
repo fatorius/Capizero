@@ -1,9 +1,12 @@
-#include "perft.h"
+#include "attacks.h"
+#include "generate.h"
 
 #include <iostream>
 using namespace std;
 
-u64 perft(int depth, Board pos){
+typedef unsigned long long u64;
+
+u64 perft(int depth, Board pos, bool first = true){
     u64 nodes = 0;
     vector<string> moves = returnMoves(pos);
 
@@ -13,21 +16,29 @@ u64 perft(int depth, Board pos){
 
     for (int i = 0; i < moves.size(); i++){
         string backUpFen = pos.fen();
+        pos.makeMove(moves[i]);
         if (!isCheck(pos)){
-            nodes += perft(depth-1, pos);
+            u64 n = perft(depth-1, pos, false);
+            if (first){
+                cout<<moves[i]<<"->"<<n<<endl;
+            }
+            nodes += n;
         }
         pos.setPosition(backUpFen);
+    }
+    if (first){
+        cout<<"Total nodes: ";
     }
 
     return nodes;
 }
 
 int main(){
+    cout<<"depth: ";
     int depth;
     cin>>depth;
 
     Board pos;
-
     cout<<perft(depth, pos);
 
     return 0;

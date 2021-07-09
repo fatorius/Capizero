@@ -23,7 +23,10 @@ bool isPinned(Board b, Square s){
 }
 
 bool isCheck(Board b){
-    if (attacks(b, b.getKingSquare()) > 0){
+    Square king = b.getKingSquare();
+    king.y = 7 - king.y;
+    b.colorflip();
+    if (attacks(b, king) != 0){
         return true;
     }
     else{
