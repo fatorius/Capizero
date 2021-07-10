@@ -10,7 +10,6 @@ u64 perft(int depth, Board pos, bool first = true){
     vector<string> moves = returnMoves(pos);
 
     if (depth == 0){
-        cout<<pos.fen()<<endl;
         return 1ULL;
     }
 
@@ -27,19 +26,28 @@ u64 perft(int depth, Board pos, bool first = true){
         pos.setPosition(backUpFen);
     }
     if (first){
-        cout<<"Total nodes: ";
+        cout<<"\nTotal nodes: ";
     }
 
     return nodes;
 }
 
-int main(){
+bool calc_perft(){
     cout<<"depth: ";
     int depth;
     cin>>depth;
 
     Board pos;
-    cout<<perft(depth, pos);
+    cout<<perft(depth, pos)<<endl<<endl;
+
+    return depth;
+}
+
+int main(){
+    cout<<"capizero 210709"<<endl;
+    cout<<"by hugosouza"<<"\n\n";
+
+    while (calc_perft()){}
 
     return 0;
 }

@@ -461,12 +461,13 @@ string Board::fen(){
 	string positionFen = "";
 
 	while (true){
-		if (getPiece(squareCount) != noPiece){
+        piece p = getPiece(NUMBER_OF_SQUARES - squareCount);
+		if (p != noPiece){
 			if (emptySquares != 0){
 				positionFen += to_string(emptySquares);
 				emptySquares = 0;
 			}
-            positionFen += pieceToString(getPiece(squareCount));
+            positionFen += pieceToString(p);
 		}
 		else{
 			emptySquares++;

@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "capizero.h"
 
 using namespace std;

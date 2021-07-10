@@ -1,6 +1,7 @@
 #include "generate.h"
 
 #include <iostream>
+#include <cstdlib>
 using namespace std;
 
 #define NOTPINNED 0
@@ -55,7 +56,7 @@ vector<string> generate(Board b, Square s, piece p, side t){
                 else{ 
                     array.push_back(makeMoves(s, dest, t));
                 }
-                if (s.y == 1){
+                if (s.y == 1 and b.getPiece(s.x, s.y+2) == noPiece){
                     Square dest2(s.x, s.y+2);
                     array.push_back(makeMoves(s, dest2, t));
                 }
@@ -124,7 +125,7 @@ vector<string> generate(Board b, Square s, piece p, side t){
                     piece attackedPiece = b.getPiece(s.x + (d * ix), s.y + (d * iy));
 
                     if ((attackedPiece == noPiece or attackedPiece == isBlackPiece(attackedPiece)) and
-                        (pin == NOTPINNED or ix + (iy * 3) == pin)){
+                        (pin == NOTPINNED or abs(ix + (iy * 3)) == pin)){
                         Square bA(s.x + (d * ix), s.y + (d * iy));
                         array.push_back(makeMoves(s, bA, t));
                     }
@@ -144,7 +145,7 @@ vector<string> generate(Board b, Square s, piece p, side t){
                         piece attackedPiece = b.getPiece(s.x + (d * ix), s.y + (d * iy));
 
                         if ((attackedPiece == noPiece or attackedPiece == isBlackPiece(attackedPiece)) and
-                            (pin == NOTPINNED or ix + (iy * 3) == pin)){
+                            (pin == NOTPINNED or abs(ix + (iy * 3)) == pin)){
                             Square rA(s.x + (d * ix), s.y + (d * iy));
                             array.push_back(makeMoves(s, rA, t));
                         }
@@ -164,7 +165,7 @@ vector<string> generate(Board b, Square s, piece p, side t){
                     piece attackedPiece = b.getPiece(s.x + (d * ix), s.y + (d * iy));
 
                     if ((attackedPiece == noPiece or attackedPiece == isBlackPiece(attackedPiece)) and
-                        (pin == NOTPINNED or ix + (iy * 3) == pin)){
+                        (pin == NOTPINNED or abs(ix + (iy * 3)) == pin)){
                         Square qA(s.x + (d * ix), s.y + (d * iy));
                         array.push_back(makeMoves(s, qA, t));
                     }

@@ -3,6 +3,9 @@
 
 #include "generate.h"
 
+#include <iostream>
+using namespace std;
+
 #define CAPIZERO_VERSION "alpha 0.1.1"
 
 Board board;

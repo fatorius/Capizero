@@ -7,7 +7,7 @@ using namespace std;
 
 #define INITIAL_POSITION "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
-#define NUMBER_OF_SQUARES 64
+#define NUMBER_OF_SQUARES 63
 #define NUMBER_OF_RANKS 8
 #define NUMBER_OF_FILES 8
 
