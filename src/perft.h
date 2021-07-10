@@ -1,6 +1,8 @@
 #ifndef PERFT
 #define PERFT
 
+#include <bits/stdc++.h>
+#include <chrono>
 #include "generate.h"
 
 using namespace std;

@@ -22,7 +22,7 @@ u64 perft(int depth, Board pos, bool first){
         pos.setPosition(backUpFen);
     }
     if (first){
-        cout<<"\nTotal nodes: ";
+        cout<<"\n"<<nodes<<" nodes calculated in ";
     }
 
     return nodes;
@@ -33,5 +33,13 @@ void calc_perft(Board b){
     cout<<"\ndepth: ";
     cin>>depth;
 
-    cout<<perft(depth, b, true)<<endl<<endl;
+    auto start = chrono::high_resolution_clock::now();
+    perft(depth, b, true);
+    auto end = chrono::high_resolution_clock::now();
+
+    double time = chrono::duration_cast<chrono::nanoseconds>(end-start).count();
+
+    time *= 1e-9;
+
+    cout<<time<<setprecision(9)<<" secs"<<endl<<endl;
 }
