@@ -1,8 +1,5 @@
-capizero: ./src/capizero.o ./src/board.o ./src/generate.o ./src/attacks.o
-	@ g++ -o capizero ./src/capizero.o ./src/board.o ./src/generate.o ./src/attacks.o
-
-perft: ./src/perft.o ./src/board.o ./src/generate.o ./src/attacks.o
-	@ g++ -o perft ./src/perft.o ./src/board.o ./src/generate.o ./src/attacks.o
+capizero: ./src/capizero.o ./src/board.o ./src/generate.o ./src/attacks.o ./src/perft.o
+	@ g++ -o capizero ./src/capizero.o ./src/board.o ./src/generate.o ./src/attacks.o ./src/perft.o
 
 perft.o: ./src/perft.cpp
 	@ g++ -c ./src/perft.cpp -o ./src/perft.o
@@ -22,4 +19,4 @@ board.o: ./src/board.cpp
 clean:
 	@ del src\*.o
 
-all: capizero perft clean
+all: capizero clean

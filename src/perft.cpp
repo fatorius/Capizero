@@ -1,11 +1,8 @@
-#include "generate.h"
+#include "perft.h"
 
-#include <iostream>
 using namespace std;
 
-typedef unsigned long long u64;
-
-u64 perft(int depth, Board pos, bool first = true){
+u64 perft(int depth, Board pos, bool first){
     u64 nodes = 0;
     vector<string> moves = returnMoves(pos);
 
@@ -31,41 +28,10 @@ u64 perft(int depth, Board pos, bool first = true){
     return nodes;
 }
 
-bool calc_perft(){
-    string fen;
-    cout<<"fen (s to use starting position): ";
-    cin>>fen;
-    if (fen == "s"){
-        fen = INITIAL_POSITION;
-    }
-    else{
-        string f2;
-        string f3;
-        string f4;
-        string f5;
-        string f6;
-        cin>>f2;
-        cin>>f3;
-        cin>>f4;
-        cin>>f5;
-        cin>>f6;
-        fen += " "+f2+" "+f3+" "+f4+" "+f5+" "+f6;
-    }
-    cout<<"depth: ";
+void calc_perft(Board b){
     int depth;
+    cout<<"\ndepth: ";
     cin>>depth;
 
-    Board pos(fen);
-    cout<<perft(depth, pos)<<endl<<endl;
-
-    return depth;
-}
-
-int main(){
-    cout<<"capizero 210709"<<endl;
-    cout<<"by hugosouza"<<"\n\n";
-
-    while (calc_perft()){}
-
-    return 0;
+    cout<<perft(depth, b, true)<<endl<<endl;
 }

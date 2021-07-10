@@ -1,9 +1,8 @@
 #ifndef CAPIZERO
 #define CAPIZERO
 
-#include "generate.h"
+#include "perft.h"
 
-#include <iostream>
 using namespace std;
 
 #define CAPIZERO_VERSION "alpha 0.1.1"
@@ -54,6 +53,9 @@ bool read(){
     }
     else if (cmd == "exit"){
         return false;
+    }
+    else if (cmd == "perft"){
+        calc_perft(board);
     }
     else if (cmd == "reset"){
         board.setPosition(INITIAL_POSITION);
