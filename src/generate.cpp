@@ -122,12 +122,21 @@ vector<string> generate(Board b, Square s, piece p, side t){
                 int_fast8_t iy = ((i % 2 == 0) * 2 - 1);
             
                 for (int_fast8_t d = 1; d < 8; d++){
-                    piece attackedPiece = b.getPiece(s.x + (d * ix), s.y + (d * iy));
+                    Square bA(s.x + (d * ix), s.y + (d * iy));
+                    piece attackedPiece = b.getPiece(bA);
 
-                    if ((attackedPiece == noPiece or attackedPiece == isBlackPiece(attackedPiece)) and
-                        (pin == NOTPINNED or abs(ix + (iy * 3)) == pin)){
-                        Square bA(s.x + (d * ix), s.y + (d * iy));
-                        array.push_back(makeMoves(s, bA, t));
+                    if (pin == NOTPINNED or abs(ix + (iy * 3)) == pin){    
+                        if (attackedPiece == noPiece){
+                            
+                            array.push_back(makeMoves(s, bA, t));
+                        }
+                        else if (isBlackPiece(attackedPiece)){
+                            array.push_back(makeMoves(s, bA, t));
+                            break;
+                        }
+                        else{
+                            break;
+                        }
                     }
                     else{
                         break;
@@ -137,23 +146,32 @@ vector<string> generate(Board b, Square s, piece p, side t){
             break;
 
         case whiteRook:
-                for (int_fast8_t i = 0; i < 4; i++){
-                    int_fast8_t ix = (i == 0 ? -1 : i == 1 ? 1 : 0);
-                    int_fast8_t iy = (i == 2 ? -1 : i == 3 ? 1 : 0);
+            for (int_fast8_t i = 0; i < 4; i++){
+                int_fast8_t ix = (i == 0 ? -1 : i == 1 ? 1 : 0);
+                int_fast8_t iy = (i == 2 ? -1 : i == 3 ? 1 : 0);
                     
-                    for (int_fast8_t d = 1; d < 8; d++){
-                        piece attackedPiece = b.getPiece(s.x + (d * ix), s.y + (d * iy));
+                for (int_fast8_t d = 1; d < 8; d++){
+                    Square rA(s.x + (d * ix), s.y + (d * iy));
+                    piece attackedPiece = b.getPiece(rA);
 
-                        if ((attackedPiece == noPiece or attackedPiece == isBlackPiece(attackedPiece)) and
-                            (pin == NOTPINNED or abs(ix + (iy * 3)) == pin)){
-                            Square rA(s.x + (d * ix), s.y + (d * iy));
+                    if (pin == NOTPINNED or abs(ix + (iy * 3)) == pin){    
+                        if (attackedPiece == noPiece){
+                            
                             array.push_back(makeMoves(s, rA, t));
+                        }
+                        else if (isBlackPiece(attackedPiece)){
+                            array.push_back(makeMoves(s, rA, t));
+                            break;
                         }
                         else{
                             break;
                         }
                     }
+                    else{
+                        break;
+                    }
                 }
+            }
             break;
             
         case whiteQueen:
@@ -162,12 +180,21 @@ vector<string> generate(Board b, Square s, piece p, side t){
                 int_fast8_t iy = (((i + (i > 3)) / 3) << 0) - 1;
 
                 for (int_fast8_t d = 1; d < 8; d++){
-                    piece attackedPiece = b.getPiece(s.x + (d * ix), s.y + (d * iy));
+                    Square qA(s.x + (d * ix), s.y + (d * iy));
+                    piece attackedPiece = b.getPiece(qA);
 
-                    if ((attackedPiece == noPiece or attackedPiece == isBlackPiece(attackedPiece)) and
-                        (pin == NOTPINNED or abs(ix + (iy * 3)) == pin)){
-                        Square qA(s.x + (d * ix), s.y + (d * iy));
-                        array.push_back(makeMoves(s, qA, t));
+                    if (pin == NOTPINNED or abs(ix + (iy * 3)) == pin){    
+                        if (attackedPiece == noPiece){
+                            
+                            array.push_back(makeMoves(s, qA, t));
+                        }
+                        else if (isBlackPiece(attackedPiece)){
+                            array.push_back(makeMoves(s, qA, t));
+                            break;
+                        }
+                        else{
+                            break;
+                        }
                     }
                     else{
                         break;
