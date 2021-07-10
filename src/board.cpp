@@ -6,6 +6,10 @@
 
 using namespace std;
 
+coordinate getFile(square s){
+    return s % 8;
+}
+
 coordinate getFile(string s){
     char rank = s[0];
     
@@ -29,6 +33,10 @@ coordinate getFile(string s){
         default:
             return -1;
     }
+}
+
+coordinate getRank(square s){
+    return s / 8;
 }
 
 coordinate getRank(string s){
@@ -461,7 +469,7 @@ string Board::fen(){
 	string positionFen = "";
 
 	while (true){
-        piece p = getPiece(NUMBER_OF_SQUARES - squareCount);
+        piece p = getPiece(getFile(squareCount), 7-getRank(squareCount));
 		if (p != noPiece){
 			if (emptySquares != 0){
 				positionFen += to_string(emptySquares);

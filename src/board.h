@@ -43,7 +43,9 @@ const piece blackQueen = 10;
 const piece whiteKing = 11;
 const piece blackKing = 12;
 
+coordinate getRank(square s);
 coordinate getRank(string s);
+coordinate getFile(square s);
 coordinate getFile(string s);
 
 bool isWhitePiece(piece p);

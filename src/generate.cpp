@@ -107,11 +107,11 @@ vector<string> generate(Board b, Square s, piece p, side t){
                 int_fast8_t ix = ((i > 3) + 1) * (((i % 4) > 1) * 2 - 1);
                 int_fast8_t iy = (2 - (i > 3)) * ((i % 2 == 0) * 2 - 1);
 
-                piece attackedPiece = b.getPiece(s.x + ix, s.y + iy);
+                Square aS(s.x + ix, s.y + iy);
+                piece attackedPiece = b.getPiece(aS);
 
-                if (attackedPiece == noPiece and !isWhitePiece(attackedPiece)){
-                    Square dest(s.x + ix, s.y + iy);
-                    array.push_back(makeMoves(s, dest, t));
+                if (!isWhitePiece(attackedPiece) and attackedPiece != outOfSquare){
+                    array.push_back(makeMoves(s, aS, t));
                 }
             }
             break;
