@@ -136,7 +136,7 @@ bool doesBishopAttacks(Board b, Square target, Square originalSquare){
                     return true;
                 }
             }
-            else if (p != noPiece and p != whiteQueen and p != blackQueen){
+            else if (p != noPiece){
                 break;
             }
         }
@@ -161,7 +161,7 @@ bool doesRookAttacks(Board b, Square target, Square originalSquare){
                     return true;
                 }
             }
-            else if (p != noPiece and p != whiteQueen and p != blackQueen){
+            else if (p != noPiece){
                 break;
             }
         }
@@ -257,7 +257,7 @@ int_least8_t bishopAttacks(Board b, Square s){
                     attacks++;
                 }
             }
-            else if (p != noPiece and p != whiteQueen and p != blackQueen){
+            else if (p != noPiece){
                 break;
             }
         }
@@ -282,7 +282,7 @@ int_least8_t rookAttacks(Board b, Square s){
                     attacks++;
                 }
             }
-            else if (p != noPiece and p != whiteQueen and p != blackQueen){
+            else if (p != noPiece){
                 break;
             }
         }
