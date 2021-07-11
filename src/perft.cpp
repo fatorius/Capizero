@@ -13,11 +13,24 @@ u64 perft(int depth, Board pos, bool first){
     for (int i = 0; i < moves.size(); i++){
         string backUpFen = pos.fen();
         pos.makeMove(moves[i]);
-        u64 n = perft(depth-1, pos, false);
-        if (first){
-            cout<<moves[i]<<" -> "<<n<<endl;
+        
+        if (pos.turn == WHITE){
+            pos.colorflip();
         }
-        nodes += n;
+
+        bool isInCheck = isCheck(pos);
+        
+        if (pos.turn == WHITE){
+            pos.colorflip();
+        }
+        
+        if (!isInCheck){  
+            u64 n = perft(depth-1, pos, false);
+            if (first){
+                cout<<moves[i]<<" -> "<<n<<endl;
+            }
+            nodes += n;
+        }
         
         pos.setPosition(backUpFen);
     }
