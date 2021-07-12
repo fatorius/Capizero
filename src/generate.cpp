@@ -63,7 +63,7 @@ vector<string> generate(Board b, Square s, piece p, side t){
             }
 
             // captura
-            if (isBlackPiece(b.getPiece(s.x+1, s.y+1)) and pin == NOTPINNED){
+            if (isBlackPiece(b.getPiece(s.x+1, s.y+1)) and (pin == TOPRIGHTTOBOTTOMLEFT or pin == NOTPINNED)){
                 Square cap1(s.x+1, s.y+1);
                 if (s.y == 6){
                     for (int pie = 1; pie <= 11; pie += 2){
@@ -74,7 +74,7 @@ vector<string> generate(Board b, Square s, piece p, side t){
                     array.push_back(makeMoves(s, cap1, t));
                 }
             }
-            if (isBlackPiece(b.getPiece(s.x-1, s.y+1)) and pin == NOTPINNED){
+            if (isBlackPiece(b.getPiece(s.x-1, s.y+1)) and (pin == TOPLEFTTOBOTTOMRIGHT or pin == NOTPINNED)){
                 Square cap2(s.x-1, s.y+1);
                 if (s.y == 6){
                     for (int pie = 1; pie <= 11; pie += 2){
