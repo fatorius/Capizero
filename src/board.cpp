@@ -722,7 +722,7 @@ void Board::setEnPassantSquareFromMove(string fen){
         enPassantSquare = "a6";
     }
     else if (fen == "b7b5"){
-        enPassantSquare = "c6";
+        enPassantSquare = "b6";
     }
     else if (fen == "c7c5"){
         enPassantSquare = "c6"; 
