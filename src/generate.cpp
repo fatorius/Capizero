@@ -204,53 +204,54 @@ vector<string> generate(Board b, Square s, piece p, side t){
             break;
 
         case whiteKing:
+            b.colorflip();
+            
             for (int_fast8_t i = 0; i < 8; i++){
                 int_fast8_t ix = (i + (i > 3)) % 3 - 1;
                 int_fast8_t iy = (((i + (i > 3)) / 3) << 0) - 1;
                 
-                piece attackedPiece = b.getPiece(s.x + ix, s.y + iy);
+                Square attackSquare(s.x + ix, 7 - s.y + iy);
 
-                b.colorflip();
-                Square invertedS(s.x + ix, 7-(s.y + iy));
+                piece attackedPiece = b.getPiece(attackSquare);
                 
-                if ((attackedPiece == noPiece or attackedPiece == isBlackPiece(attackedPiece)) and (attacks(b, invertedS) == 0)){
-                    b.colorflip();
-                    Square kA(s.x + ix, s.y + iy);
-                    array.push_back(makeMoves(s, kA, t));
-                }
-                else{
-                    b.colorflip();
+                if ((attackedPiece == noPiece or isWhitePiece(attackedPiece)) and (attacks(b, Square(attackSquare.x, attackSquare.y)) == 0)){
+                    array.push_back(makeMoves(s, Square(attackSquare.x, 7-attackSquare.y), t));
                 }
             }
+            
+            b.colorflip();
+            
             if (b.castlingSides != NOCASTLING){
+                b.colorflip();
                 if (b.turn == WHITE){
                     if (b.castlingSides[WHITEKINGSIDE]){
-                        if (b.getPiece(5, 0) == noPiece and b.getPiece(6, 0) == noPiece and
-                            attacks(b, Square(5, 0)) == 0 and attacks(b, Square(6, 0)) == 0){
+                        if (b.getPiece(4, 7) == blackKing and b.getPiece(5, 7) == noPiece and b.getPiece(6, 7) == noPiece and
+                            attacks(b, Square(5, 7)) == 0 and attacks(b, Square(6, 7)) == 0 and b.getPiece(7,7) == blackRook){
                                 array.push_back("o-o");
                         }
                     }
                     if (b.castlingSides[WHITEQUEENSIDE]){
-                        if (b.getPiece(1, 0) == noPiece and b.getPiece(2, 0) == noPiece and b.getPiece(3, 0) == noPiece and
-                            attacks(b, Square(1, 0)) == 0 and attacks(b, Square(2, 0)) == 0 and attacks(b, Square(3, 0)) == 0){
+                        if (b.getPiece(4, 7) == blackKing and b.getPiece(1, 7) == noPiece and b.getPiece(2, 7) == noPiece and b.getPiece(3, 7) == noPiece and
+                            attacks(b, Square(1, 7)) == 0 and attacks(b, Square(2, 7)) == 0 and attacks(b, Square(3, 7)) == 0 and b.getPiece(0, 7) == blackRook){
                                 array.push_back("o-o-o");
                         }
                     }
                 }
                 else{
                     if (b.castlingSides[BLACKKINGSIDE]){
-                        if (b.getPiece(5, 0) == noPiece and b.getPiece(6, 0) == noPiece and
-                            attacks(b, Square(5, 0)) == 0 and attacks(b, Square(6, 0)) == 0){
+                        if (b.getPiece(4, 7) == blackKing and b.getPiece(5, 7) == noPiece and b.getPiece(6, 7) == noPiece and
+                            attacks(b, Square(5, 7)) == 0 and attacks(b, Square(6, 7)) == 0 and b.getPiece(7,7) == blackRook){
                                 array.push_back("o-o");
                         }
                     }
                     if (b.castlingSides[BLACKQUEENSIDE]){
-                        if (b.getPiece(1, 0) == noPiece and b.getPiece(2, 0) == noPiece and b.getPiece(3, 0) == noPiece and
-                            attacks(b, Square(1, 0)) == 0 and attacks(b, Square(2, 0)) == 0 and attacks(b, Square(3, 0)) == 0){
+                        if (b.getPiece(4, 7) == blackKing and b.getPiece(1, 7) == noPiece and b.getPiece(2, 7) == noPiece and b.getPiece(3, 7) == noPiece and
+                            attacks(b, Square(1, 7)) == 0 and attacks(b, Square(2, 7)) == 0 and attacks(b, Square(3, 7)) == 0 and b.getPiece(0, 7) == blackRook){
                                 array.push_back("o-o-o");
                         }
                     }
-                }
+                }        
+                b.colorflip();
             }
             break;
     }

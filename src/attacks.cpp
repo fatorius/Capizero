@@ -210,10 +210,10 @@ bool doesKingAttacks(Board b, Square target, Square originalSquare){
 int_least8_t pawnAttacks(Board b, Square s){
     int_least8_t attacks = 0;
 
-    if (b.getPiece(s.x - 1, s.y + 1) ==  whitePawn){
+    if (b.getPiece(s.x - 1, s.y - 1) ==  whitePawn){
         attacks++;
     }
-    if (b.getPiece(s.x + 1, s.y + 1) == whitePawn){
+    if (b.getPiece(s.x + 1, s.y - 1) == whitePawn){
         attacks++;
     }
 
