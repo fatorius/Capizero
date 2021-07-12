@@ -668,7 +668,7 @@ void Board::setEnPassantSquare(string fen){
         enPassantSquare = "a6";
     }
     else if (fen == "b6"){
-        enPassantSquare = "c6";
+        enPassantSquare = "b6";
     }
     else if (fen == "c6"){
         enPassantSquare = "c6"; 
