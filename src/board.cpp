@@ -431,7 +431,6 @@ void Board::makeMove(moves san){
 
         if (movedPiece == whitePawn or movedPiece == blackPawn){
             halfmoves = -1;
-            setEnPassantSquareFromMove(san);
             Square enPassant(enPassantSquare);
             if (destination.x == enPassant.x and destination.y == enPassant.y){
                 if (enPassantSquare[1] == '3'){
@@ -443,6 +442,7 @@ void Board::makeMove(moves san){
                     setPiece(capturedPiece, noPiece);
                 }
             }
+            setEnPassantSquareFromMove(san);
         }
         else{
             enPassantSquare = "-";
