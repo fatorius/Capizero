@@ -557,6 +557,7 @@ void Board::colorflip(){
 }
 
 void Board::setCastlingSides(string fen){
+    castlingSides = 0x0;
     if (fen.find("K") != string::npos){
         castlingSides[0] = 1;
     }
