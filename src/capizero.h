@@ -9,6 +9,8 @@ using namespace std;
 
 Board board;
 
+int depth = 3;
+
 bool read(){
     string cmd;
     cin>>cmd;
@@ -54,11 +56,19 @@ bool read(){
     else if (cmd == "exit"){
         return false;
     }
+    else if (cmd == "depth"){
+        cout<<"New depth: ";
+        cin>>depth;
+        cout<<"\nDepth sucessfully set to "<<depth<<endl;
+    }
     else if (cmd == "perft"){
         calc_perft(board);
     }
     else if (cmd == "benchmark"){
         bench();
+    }
+    else if (cmd == "search"){
+        cout<<search(board, depth)<<endl;
     }
     else if (cmd == "reset"){
         board.setPosition(INITIAL_POSITION);

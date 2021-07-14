@@ -12,9 +12,10 @@ u64 perft(int depth, Board pos, bool first){
     if (depth == 0){
         return 1ULL;
     }
+    
+    string backUpFen = pos.fen();
 
     for (int i = 0; i < moves.size(); i++){
-        string backUpFen = pos.fen();
         pos.makeMove(moves[i]);
         
         if (pos.turn == WHITE){

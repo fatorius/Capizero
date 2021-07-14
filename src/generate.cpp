@@ -40,7 +40,6 @@ moves makeMoves(Square x, Square y, side t, piece promote=noPiece){
     }
 }
 
-// TODO generate captures
 vector<string> generate(Board b, Square s, piece p, side t){
     vector<string> array;
     direction pin = pinnedDirection(b, s);

@@ -6,6 +6,7 @@
 
 #include <string>
 
+float minmax(Board b, int depth, float alpha, float beta, bool isWhite);
 string search(Board b, int depth);
 
 #endif
