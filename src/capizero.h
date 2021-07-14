@@ -1,7 +1,8 @@
 #ifndef CAPIZERO
 #define CAPIZERO
 
-#include "perft.h"
+// TODO organize the includes
+#include "benchmark.h"
 
 using namespace std;
 
@@ -56,6 +57,9 @@ bool read(){
     }
     else if (cmd == "perft"){
         calc_perft(board);
+    }
+    else if (cmd == "benchmark"){
+        bench();
     }
     else if (cmd == "reset"){
         board.setPosition(INITIAL_POSITION);
