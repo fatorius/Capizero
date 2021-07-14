@@ -1,10 +1,9 @@
 #ifndef GENERATE
 #define GENERATE
 
-#include "attacks.h"
+#include "board.h"
 
 #include <vector>
-#include <iostream>
 using namespace std;
 
 bool isEnPassantAdjacent(Square s, Square ep);

@@ -1,5 +1,9 @@
 #include "benchmark.h"
 
+#include "perft.h"
+#include "search.h"
+#include "board.h"
+
 using namespace std;
 
 void bench(){

@@ -1,5 +1,5 @@
-capizero: ./src/capizero.o ./src/board.o ./src/generate.o ./src/attacks.o ./src/perft.o ./src/benchmark.o ./src/search.o
-	@ g++ -o capizero ./src/capizero.o ./src/board.o ./src/generate.o ./src/attacks.o ./src/perft.o ./src/benchmark.o ./src/search.o
+capizero: ./src/capizero.o ./src/board.o ./src/generate.o ./src/attacks.o ./src/perft.o ./src/benchmark.o ./src/search.o ./src/eval.o
+	@ g++ -o capizero ./src/capizero.o ./src/board.o ./src/generate.o ./src/attacks.o ./src/perft.o ./src/benchmark.o ./src/search.o ./src/eval.o
 
 perft.o: ./src/perft.cpp
 	@ g++ -c ./src/perft.cpp -o ./src/perft.o
@@ -20,7 +20,10 @@ benchmark.o: ./src/benchmark.cpp
 	@ g++ -c ./src/benchmark.cpp -o ./src/benchmark.o
 
 search.o: ./src/search.cpp
-	@g++ -c ./src/search.cpp -o ./src/search.o
+	@ g++ -c ./src/search.cpp -o ./src/search.o
+
+eval.o: ./src/eval.cpp
+	@ g++ -c ./src/eval.cpp -o ./src/eval.o
 
 clean:
 	@ del src\*.o

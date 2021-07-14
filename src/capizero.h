@@ -1,8 +1,7 @@
 #ifndef CAPIZERO
 #define CAPIZERO
 
-// TODO organize the includes
-#include "benchmark.h"
+#include "include.h"
 
 using namespace std;
 

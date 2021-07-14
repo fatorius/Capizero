@@ -1,7 +1,9 @@
 #include "generate.h"
 
-#include <iostream>
+#include "attacks.h"
+
 #include <cstdlib>
+#include <iostream>
 using namespace std;
 
 #define NOTPINNED 0

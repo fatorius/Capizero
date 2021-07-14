@@ -1,5 +1,8 @@
 #include "perft.h"
 
+#include "generate.h"
+#include "attacks.h"
+
 using namespace std;
 
 u64 perft(int depth, Board pos, bool first){

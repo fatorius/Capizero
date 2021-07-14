@@ -3,7 +3,6 @@
 
 #include "board.h"
 
-
 #define NOTPINNED 0
 #define HORIZONTALPIN 1
 #define TOPLEFTTOBOTTOMRIGHT 2
